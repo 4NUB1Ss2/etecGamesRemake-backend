@@ -34,7 +34,8 @@ COPY ./docker/nginx.conf /etc/nginx/sites-available/default
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 # Generate app key and run migrations on startup
-CMD php artisan key:generate && \
+CMD cp .env.example .env && \
+    php artisan key:generate && \
     php artisan migrate --force && \
     php-fpm -D && \
     nginx -g "daemon off;"
