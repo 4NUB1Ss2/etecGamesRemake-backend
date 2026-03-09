@@ -3,7 +3,7 @@
 ![RepoSize](https://img.shields.io/github/repo-size/4NUB1Ss2/etecGamesRemake-backend?style=f)
 ![LastCommit](https://img.shields.io/github/last-commit/4NUB1Ss2/etecGamesRemake-backend)
 ![Issues](https://img.shields.io/github/issues/4NUB1Ss2/etecGamesRemake-backend)
-![License](https://img.shields.io/github/license/4NUB1Ss2/etecGamesRemake-backend?v1=1)
+![License](https://img.shields.io/github/license/4NUB1Ss2/etecGamesRemake-backend)
 ![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?logo=php)
 ![Laravel](https://img.shields.io/badge/Laravel-API-red?logo=laravel)
 ![API](https://img.shields.io/badge/API-REST-green)
