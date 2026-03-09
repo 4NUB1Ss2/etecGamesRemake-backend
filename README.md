@@ -202,6 +202,6 @@ Backend Developer
     <img src="https://img.shields.io/badge/GitHub-4NUB1Ss2-181717?logo=github" />
   </a>
   <a href="https://instagram.com/g.b_rohrig">
-    <img src="https://img.shields.io/badge/Instagram-@g.b_rohrig-		E4405F?logo=instagram&logoColor=white" />
+    <img src="https://img.shields.io/badge/Instagram-@g.b_rohrig-E4405F?logo=instagram&logoColor=white" />
   </a>
 </p>
