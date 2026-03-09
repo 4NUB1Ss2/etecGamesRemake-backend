@@ -33,11 +33,10 @@ COPY ./docker/nginx.conf /etc/nginx/sites-available/default
 # Set permissions
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
+# Set executable permission on startup script
+RUN chmod +x /var/www/start.sh
+
 # Generate app key and run migrations on startup
-CMD cp .env.example .env && \
-    php artisan key:generate && \
-    php artisan migrate --force && \
-    php-fpm -D && \
-    nginx -g "daemon off;"
+CMD ["/var/www/start.sh"]
 
 EXPOSE 10000
