@@ -7,6 +7,8 @@
 ![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?logo=php)
 ![Laravel](https://img.shields.io/badge/Laravel-API-red?logo=laravel)
 ![API](https://img.shields.io/badge/API-REST-green)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![Render](https://img.shields.io/badge/Render-Deployed-46E3B7?logo=render&logoColor=white)
 
 Backend API for **EtecGames Remake**, a platform designed to showcase **games, applications, and websites** created by **technical school students**.
 
@@ -105,6 +107,9 @@ resources**.
 
 ## ⚙️ Installation
 
+
+### Local Development
+
 Clone the repository:
 
 ``` bash
@@ -142,6 +147,26 @@ Start the development server:
 php artisan serve
 ```
 
+---
+
+### 🐳 Docker (Production)
+
+Make sure you have **Docker** installed, then:
+
+``` bash
+git clone https://github.com/4NUB1Ss2/etecGamesRemake-backend.git
+cd etecGamesRemake-backend
+docker build -t etecgames-backend .
+docker run -p 10000:10000 --env-file .env etecgames-backend
+```
+
+The `Dockerfile` will automatically:
+- Install all dependencies
+- Generate the application key
+- Run database migrations
+- Start PHP-FPM and Nginx
+
+
 
 ---
 
@@ -167,11 +192,25 @@ php artisan test
 
 ## 🚀 Deployment
 
-The API can be deployed using cloud platforms or servers such as:
+## ☁️ Deployment
 
--   **Render**
--   **VPS**
--   **Docker environments**
+The API is deployed on **Render** using **Docker** and is live at:
+
+**[api.etecgames.com.br](https://api.etecgames.com.br)**
+
+**Required environment variables on your hosting platform:**
+
+| Variable | Description |
+|----------|-------------|
+| `APP_ENV` | `production` |
+| `APP_DEBUG` | `false` |
+| `APP_URL` | Your deployment URL |
+| `DB_HOST` | Database host |
+| `DB_PORT` | Database port |
+| `DB_DATABASE` | Database name |
+| `DB_USERNAME` | Database username |
+| `DB_PASSWORD` | Database password |
+| `SESSION_DRIVER` | `file` |
 
 ------------------------------------------------------------------------
 
