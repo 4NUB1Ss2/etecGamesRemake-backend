@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSchoolRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -21,10 +21,13 @@ class UpdateSchoolRequest extends FormRequest
      */
     public function rules(): array
     {
-        $schoolId = $this->route('school');
+        $id = $this->route('id');
         return [
-            'name' => "sometimes|string|unique:schools,name,$schoolId",
-            'address' => "sometimes|string|unique:schools,address,$schoolId",
+            'username' => "sometimes|string|unique:users,username,$id",
+            'email' => "sometimes|email|unique:users,email,$id",
+            'password' => "sometimes|string|min:6",
+            'name' => "sometimes|string|unique:users,name",
+            'school_id' => "sometimes|integer|exists:schools,id",
         ];
     }
 }

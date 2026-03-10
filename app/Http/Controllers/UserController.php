@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\School;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -46,7 +47,7 @@ class UserController extends Controller
         }catch (\Exception $exception){
             return Response()->json([
                 'message' => 'erro ao cadastrar usuario',
-            ]);
+            ],400);
         }
 
     }
@@ -56,24 +57,7 @@ class UserController extends Controller
      */
     public function show(Request $request, string $id)
     {
-//        $school_id = $request->school_id;
-//        if ($school_id) {
-//            $users = User::with('school')->where('school_id', $school_id)->get();
-//            $school = School::findOrFail($school_id);
 //
-//            return Response()->json([
-//                'users' => $users->map(function ($users) {
-//                    return [
-//                        'id' => $users->id,
-//                        'username' => $users->username,
-//                        'email' => $users->email,
-//                        'nome' => $users->name,
-//
-//                    ];
-//                }),
-//                'school' => $school,
-//            ]);
-//        }
         try {
             $users = User::findOrFail($id);
             $school_id = $users->school_id;
@@ -93,9 +77,26 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, string $id)
     {
-        //
+
+        try {
+            $user = User::findOrFail($id);
+            $user->update([
+                ...$request->validated(),
+                'password' => Hash::make($request->password),
+
+            ]);
+
+            return Response()->json([
+                'user' => $user,
+            ], 200);
+        } catch (\Exception $exception) {
+            return Response()->json([
+                'message' => "Nenhum Usuario encontrado",
+            ], 400);
+        }
+
     }
 
     /**
@@ -103,20 +104,18 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try{
+            $removed = User::destroy($id);
+            if (!$removed)
+            {
+                throw new \Exception();
+            }
+            return Response()->json(null, 204);
+        }catch (\Exception $exception){
+            return Response()->json([
+                'message' => "Nenhum Usuario encontrado",
+            ],400);
+        }
     }
 
-    public function hashtest(Request $request)
-    {
-        $password = $request->password;
-        $id = $request->id;
-        $user = User::findOrFail($id);
-        $hashedPassword = $user->password;
-        $verify = password_verify($password, $hashedPassword);
-
-        return Response()->json([
-            'message' => $verify,
-        ]);
-
-    }
 }
