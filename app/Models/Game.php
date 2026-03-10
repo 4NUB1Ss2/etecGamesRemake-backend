@@ -10,6 +10,16 @@ class Game extends Model
     /** @use HasFactory<\Database\Factories\GameFactory> */
     use HasFactory;
 
+
+    protected $fillable = [
+        'name',
+        'description',
+        'link',
+        'image',
+        'user_id',
+        'school_id',
+    ];
+
     public function school()
     {
         return $this->belongsTo(School::class, 'school_id');
