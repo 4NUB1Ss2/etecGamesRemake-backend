@@ -16,9 +16,7 @@ class GameController extends Controller
     {
         try{
             $games = Game::All();
-            return Response()->json([
-                'games' => $games
-            ],200);
+            return Response()->json($games,200);
         }catch (\Exception $exception){
             return Response()->json([
                 'message' => 'Nenhum registro encontrado!'
@@ -43,10 +41,7 @@ class GameController extends Controller
                 'clicks' => 10,
             ]);
 
-            return Response()->json([
-                ...$game->toArray(),
-                'image' => $game->image ? Storage::disk('supabase')->url($game->image) : null
-            ],200);
+            return Response()->json($game,201);
 
         }catch (\Exception $exception){
 
@@ -68,7 +63,7 @@ class GameController extends Controller
 
             return Response()->json([
                 ...$game->toArray(),
-                'image' => asset('storage/'.$game->image),
+                'image' => $game->image ? Storage::disk('supabase')->url($game->image) : null,
             ]);
         }catch (\Exception $exception){
             return Response()->json([

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Game extends Model
 {
@@ -19,6 +21,14 @@ class Game extends Model
         'user_id',
         'school_id',
     ];
+
+    public function image(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? Storage::disk('supabase')->url($value) : null,
+        );
+
+    }
 
     public function school()
     {

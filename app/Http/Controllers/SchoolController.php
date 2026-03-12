@@ -36,7 +36,7 @@ class SchoolController extends Controller
             $school = School::create($request->validated());
             return Response()->json([
                 'school' => $school
-            ], 200);
+            ], 201);
         }catch (\Exception $exception){
             return Response()->json([
                 'message' => 'Erro ao cadastrar escola',
