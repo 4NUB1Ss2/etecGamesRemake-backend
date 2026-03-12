@@ -12,16 +12,31 @@ class GameController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        try{
-            $games = Game::All();
-            return Response()->json($games,200);
-        }catch (\Exception $exception){
-            return Response()->json([
-                'message' => 'Nenhum registro encontrado!'
-            ],400);
+        $page = $request->input('current_page', 1);
+        $section = $request->input('section', 'last');
+
+        $query = Game::query();
+
+        switch ($section) {
+            case 'last':
+                $query->orderBy('games.created_at', 'desc');
+                break;
+            case 'clicks':
+                $query->orderBy('games.clicks', 'desc');
+                break;
+            default:
+                $query->orderBy('games.created_at', 'desc');
+                break;
         }
+
+        $games = $query->paginate(3, ['*'], 'page', $page);
+
+        return response()->json($games, 200);
+
+
+
     }
 
     /**
