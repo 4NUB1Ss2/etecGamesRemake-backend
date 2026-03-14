@@ -54,7 +54,7 @@ class SchoolController extends Controller
             $school = School::findOrFail($id);
             return Response()->json([
                 'school' => $school
-            ]);
+            ],200);
         }catch (\Exception $exception){
             return Response()->json([
                 'message' => 'Erro ao carregar escola',
@@ -73,7 +73,7 @@ class SchoolController extends Controller
 
         return Response()->json([
             'school' => $school
-        ]);
+        ],200);
 
     }
 

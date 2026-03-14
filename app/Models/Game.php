@@ -22,6 +22,10 @@ class Game extends Model
         'school_id',
     ];
 
+    protected $hidden = [
+        'id'
+    ];
+
     public function image(): Attribute
     {
         return Attribute::make(
