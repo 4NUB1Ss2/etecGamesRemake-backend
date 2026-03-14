@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('description');
             $table->string('link');
             $table->string('image');
-            $table->integer('clicks');
+            $table->integer('clicks')->default(0);
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('school_id')->constrained('schools');
             $table->timestamps();
