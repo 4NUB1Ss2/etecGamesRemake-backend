@@ -28,8 +28,9 @@ class StoreUserRequest extends FormRequest
             'username' => "required|string|unique:users,username",
             'email' => "required|email|unique:users,email",
             'password' => "required|string|min:6",
-            'name' => "required|string|unique:users,name",
-            'school_id' => "required|integer|exists:schools,id",
+            'name' => "required|string",
+            'role' => "required|string|in:user,student,professor",
+            'school_id' => "nullable|integer|exists:schools,id",
         ];
     }
 
