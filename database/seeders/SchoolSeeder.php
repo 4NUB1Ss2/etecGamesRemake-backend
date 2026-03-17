@@ -13,6 +13,11 @@ class SchoolSeeder extends Seeder
      */
     public function run(): void
     {
+        School::create([
+            'name' => 'Sem escola',
+            'address' => 'N/A',
+        ]);
+
         School::factory(10)->create();
     }
 }

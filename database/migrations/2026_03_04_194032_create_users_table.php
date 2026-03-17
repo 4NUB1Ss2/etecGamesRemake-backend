@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('name');
             $table->string('role')->default('user');
-            $table->foreignId('school_id')->constrained('schools');
+            $table->foreignId('school_id')->default(1)->constrained('schools');
             $table->timestamps();
         });
     }

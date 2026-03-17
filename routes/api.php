@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -11,6 +12,17 @@ use App\Http\Controllers\SchoolController;
 //})->middleware('auth:sanctum');
 
 Route::apiResource('schools', SchoolController::class);
-Route::apiResource('users', UserController::class);
+Route::get('users', [UserController::class, 'index']);
+Route::get('users/{username}', [UserController::class, 'show']);
 Route::apiResource('games', GameController::class);
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('users',  [UserController::class, 'store']);
+    Route::put('users/{id}',  [UserController::class, 'update']);
+    Route::delete('users/{id}',  [UserController::class, 'destroy']);
+    Route::get('/me', [AuthController::class, 'me']);
+
+});
 

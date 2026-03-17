@@ -25,7 +25,7 @@ WORKDIR /var/www
 COPY . .
 
 # Install dependencies
-RUN composer install --optimize-autoloader --no-dev
+RUN composer install --optimize-autoloader
 
 # Copy nginx config
 COPY ./docker/nginx.conf /etc/nginx/sites-available/default

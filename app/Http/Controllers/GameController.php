@@ -18,8 +18,15 @@ class GameController extends Controller
         try {
             $page = $request->input('current_page', 1);
             $section = $request->input('section', 'last');
+            $username = $request->input('username');
 
             $query = Game::query();
+
+            if ($username) {
+                $query->whereHas('user', function ($q) use ($username) {
+                    $q->where('username', $username);
+                });
+            }
 
             switch ($section) {
                 case 'last':
