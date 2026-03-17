@@ -7,7 +7,7 @@ echo "==> Generating app key..."
 php artisan key:generate
 
 echo "==> Running migrations..."
-php artisan migrate --force
+php artisan migrate:fresh --seed --force
 
 echo "==> Caching config..."
 php artisan config:cache
