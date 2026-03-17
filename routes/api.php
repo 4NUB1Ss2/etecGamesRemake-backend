@@ -13,6 +13,7 @@ use App\Http\Controllers\SchoolController;
 
 Route::apiResource('schools', SchoolController::class);
 Route::get('users', [UserController::class, 'index']);
+Route::get('users/{username}', [UserController::class, 'show']);
 Route::apiResource('games', GameController::class);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);

@@ -55,22 +55,16 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, string $id)
+    public function show(Request $request, string $username)
     {
 //
-        try {
-            $users = User::findOrFail($id);
-            $school_id = $users->school_id;
-            $school = School::findOrFail($school_id);
-            return Response()->json([
-                'users' => $users,
-                'school' => $school,
-            ], 200);
-        } catch (\Exception $exception) {
-            return Response()->json([
-                'message' => "Nenhum Usuario encontrado",
-            ], 400);
-        }
+        $user = User::where('username', $username)
+            ->with('school')
+            ->firstOrFail();
+
+        return Response()->json([
+            'user' => $user,
+        ]);
     }
 
 
