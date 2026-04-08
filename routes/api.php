@@ -14,7 +14,7 @@ use App\Http\Controllers\SchoolController;
 Route::apiResource('schools', SchoolController::class);
 Route::get('users', [UserController::class, 'index']);
 Route::get('users/{username}', [UserController::class, 'show']);
-Route::apiResource('games', GameController::class);
+Route::apiResource('games', GameController::class)->except(['store', 'update', 'destroy']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
@@ -22,7 +22,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('users',  [UserController::class, 'store']);
     Route::put('users/{id}',  [UserController::class, 'update']);
     Route::delete('users/{id}',  [UserController::class, 'destroy']);
-    Route::get('/me', [AuthController::class, 'me']);
+    Route::post('games',  [GameController::class, 'store']);
+    Route::put('games/{id}',  [GameController::class, 'update']);
+    Route::delete('games/{id}',  [GameController::class, 'destroy']);
+    Route::get('me', [AuthController::class, 'me']);
 
 });
 

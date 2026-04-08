@@ -29,12 +29,14 @@ class GameController extends Controller
             }
 
             switch ($section) {
-                case 'last':
+                case 'created':
                     $query->orderBy('games.created_at', 'desc');
                     break;
                 case 'clicks':
                     $query->orderBy('games.clicks', 'desc');
                     break;
+                case 'updated':
+                    $query->orderBy('games.updated_at', 'desc');
                 default:
                     $query->orderBy('games.created_at', 'desc');
                     break;
@@ -56,6 +58,10 @@ class GameController extends Controller
      */
     public function store(StoreGameRequest $request)
     {
+
+        $user = $request->user();
+
+
         try{
             if($request->hasfile('image')){
 
@@ -66,6 +72,8 @@ class GameController extends Controller
                 ...$request->validated(),
                 'image' => $imagePath,
                 'clicks' => 10,
+                'user_id' => $user->id,
+                'school_id' => $user->school_id,
             ]);
 
             return Response()->json($game,201);
