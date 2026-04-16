@@ -76,8 +76,6 @@ class UserController extends Controller
 
             return Response()->json([
                 ...$user->toArray(),
-                'rawUser' => $user->getRawOriginal('image'),
-                'processedUser' => $user->image,
                 'image' => $user->image ?? null,
             ],200);
         }catch (\Exception $exception){
