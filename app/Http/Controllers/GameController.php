@@ -98,7 +98,7 @@ class GameController extends Controller
 
             return Response()->json([
                 ...$game->toArray(),
-                'image' => $game->image ? Storage::disk('supabase')->url($game->image) : null,
+                'image' => $game->image ?? null,
             ],200);
         }catch (\Exception $exception){
             return Response()->json([
@@ -118,6 +118,9 @@ class GameController extends Controller
                 $imagePath = $request->file('image')->store('gameimages', 'supabase');
 
             }
+
+            
+
             if ($imagePath) {
 
                 $game = Game::findOrFail($id);
@@ -125,11 +128,16 @@ class GameController extends Controller
                     ...$request->validated(),
                     'image' => $imagePath,
                 ]);
+               
             }
             else {
                 $game = Game::findOrFail($id);
                 $game->update([$request->validated()]);
             }
+
+            
+            
+
 
             return Response()->json([
                 'message' => 'Game updated'

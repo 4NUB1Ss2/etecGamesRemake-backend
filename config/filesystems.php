@@ -59,6 +59,7 @@ return [
         ],
 
 
+        /*
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -71,6 +72,7 @@ return [
             'throw' => false,
             'report' => false,
         ],
+        */
 
     ],
 

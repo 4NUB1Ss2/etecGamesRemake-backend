@@ -8,6 +8,7 @@ use App\Models\School;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -33,9 +34,18 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+
         try {
+            if ($request->hasFile('image')){
+
+                $imagePath = $request->file('image')->store('profileimages', 'supabase');
+
+            }
+
+
             $user = User::create([
                 ...$request->validated(),
+                'image' => $imagePath ?? null,
                 'password' => Hash::make($request->password),
                 'role' => 'user',
             ]);
@@ -57,27 +67,47 @@ class UserController extends Controller
      */
     public function show(Request $request, string $username)
     {
-//
-        $user = User::where('username', $username)
-            ->with('school')
-            ->firstOrFail();
+//  
+        
+        try{
+            $user = User::where('username', $username)
+                ->with('school')
+                ->firstOrFail();
 
-        return Response()->json([
-            'user' => $user,
-        ]);
+            return Response()->json([
+                ...$user->toArray(),
+                'rawUser' => $user->getRawOriginal('image'),
+                'processedUser' => $user->image,
+                'image' => $user->image ?? null,
+            ],200);
+        }catch (\Exception $exception){
+            return Response()->json([
+                'message' => "Nenhum Usuario encontrado",
+            ],400);
+        }
     }
 
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, string $id)
+    public function update(UpdateUserRequest $request)
     {
 
+        $user = $request->user();
+        $id = $user->id;
+
         try {
+
+            if ($request->hasfile('image')) {
+
+                $imagePath = $request->file('image')->store('profileimages', 'supabase');
+            }
+
             $user = User::findOrFail($id);
             $user->update([
                 ...$request->validated(),
+                'image' => $imagePath ?? $user->getRawOriginal('image'),
                 'password' => Hash::make($request->password),
 
             ]);
