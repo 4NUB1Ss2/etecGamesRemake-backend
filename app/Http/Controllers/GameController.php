@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Game;
+use App\Models\School;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -91,20 +93,20 @@ class GameController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $game)
     {
-        try{
-            $game = Game::findOrFail($id);
+        $game = Game::where('name', $game)->firstOrFail();
+        $user = User::where('id', $game->user_id)->firstOrFail();
+        $school = School::where('id', $game->school_id)->firstOrFail();
+        
 
-            return Response()->json([
-                ...$game->toArray(),
-                'image' => $game->image ?? null,
-            ],200);
-        }catch (\Exception $exception){
-            return Response()->json([
-                'message' => $exception->getMessage()
-            ],400);
-        }
+        
+        return response()->json([
+            ...$game->toArray(),
+            'creator_username' => $user->username,
+            'creator_name' => $user->name,
+            'school_name' => $school->name,
+        ],200);
     }
 
     /**

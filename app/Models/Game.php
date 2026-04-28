@@ -23,7 +23,9 @@ class Game extends Model
     ];
 
     protected $hidden = [
-        'id'
+        'id',
+        'user_id',
+        'school_id',
     ];
 
     public function image(): Attribute
