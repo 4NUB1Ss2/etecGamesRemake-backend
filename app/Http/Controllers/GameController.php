@@ -9,6 +9,7 @@ use App\Models\School;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class GameController extends Controller
 {
@@ -70,13 +71,19 @@ class GameController extends Controller
                 $imagePath = $request->file('image')->store('gameimages', 'supabase');
             }
 
+            
+            
+            
             $game = Game::create([
                 ...$request->validated(),
+                'slug' => Str::slug($request->name),
                 'image' => $imagePath,
                 'clicks' => 10,
                 'user_id' => $user->id,
                 'school_id' => $user->school_id,
             ]);
+
+            
 
             return Response()->json($game,201);
 
@@ -93,9 +100,9 @@ class GameController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $game)
+    public function show(string $slug)
     {
-        $game = Game::where('name', $game)->firstOrFail();
+        $game = Game::where('slug', $slug)->firstOrFail();
         $user = User::where('id', $game->user_id)->firstOrFail();
         $school = School::where('id', $game->school_id)->firstOrFail();
         
@@ -121,6 +128,8 @@ class GameController extends Controller
 
             }
 
+            $slug = Str::slug($request->name);
+
             
 
             if ($imagePath) {
@@ -128,13 +137,17 @@ class GameController extends Controller
                 $game = Game::findOrFail($id);
                 $game->update([
                     ...$request->validated(),
+                    'slug' => $slug,
                     'image' => $imagePath,
                 ]);
                
             }
             else {
                 $game = Game::findOrFail($id);
-                $game->update([$request->validated()]);
+                $game->update([
+                    ...$request->validated(),
+                    'slug' => $slug,
+                ]);
             }
 
             

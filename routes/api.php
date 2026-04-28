@@ -14,7 +14,7 @@ use App\Http\Controllers\SchoolController;
 Route::apiResource('schools', SchoolController::class)->except(['store', 'update', 'destroy']);
 Route::apiResource('users', UserController::class)->except(['store', 'update', 'destroy']);
 Route::apiResource('games', GameController::class)->except(['store', 'update', 'destroy', 'show']);
-Route::get('games/{game}', [GameController::class, 'show']);
+Route::get('games/{slug}', [GameController::class, 'show']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
