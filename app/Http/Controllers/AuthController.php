@@ -116,5 +116,7 @@ private function generateUsername(string $email): string
     }
 
     return $username;
+
+    
 }
 }

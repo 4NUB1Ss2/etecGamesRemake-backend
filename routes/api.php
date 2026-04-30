@@ -10,6 +10,7 @@ use App\Http\Controllers\SchoolController;
 //Route::get('/user', function (Request $request) {
 //    return $request->user();
 //})->middleware('auth:sanctum');
+//isso aqui é pra resetar o deploy q ta umamerda, n tem nada a ver com o código em si, só pra forçar o deploy a resetar o cache e pegar as mudanças de CORS e do AuthController
 
 Route::apiResource('schools', SchoolController::class)->except(['store', 'update', 'destroy']);
 Route::apiResource('users', UserController::class)->except(['store', 'update', 'destroy']);
