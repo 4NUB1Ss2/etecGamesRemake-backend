@@ -15,15 +15,19 @@ class Game extends Model
 
     protected $fillable = [
         'name',
+        'slug',
         'description',
         'link',
+        'clicks',
         'image',
         'user_id',
         'school_id',
     ];
 
     protected $hidden = [
-        'id'
+        'id',
+        'user_id',
+        'school_id',
     ];
 
     public function image(): Attribute

@@ -27,6 +27,7 @@ class StoreUserRequest extends FormRequest
         return [
             'username' => "required|string|unique:users,username",
             'email' => "required|email|unique:users,email",
+            'image' => "nullable|image|mimes:jpeg,png,jpg",
             'password' => "required|string|min:6",
             'name' => "required|string",
             'role' => "required|string|in:user,student,professor",

@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\User;
 use App\Models\School;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Game>
@@ -18,14 +19,19 @@ class GameFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-            'name' => fake()->unique()->randomElement([
+        $name = fake()->unique()->randomElement([
                 'Counter-Strike 2', 'Valorant', 'Minecraft', 'Fortnite',
                 'League of Legends', 'GTA V', 'Red Dead Redemption 2',
                 'The Witcher 3', 'Elden Ring', 'Hollow Knight',
                 'Stardew Valley', 'Among Us', 'Apex Legends',
                 'Overwatch 2', 'Rocket League'
-            ]),
+            ]);
+        
+
+
+        return [
+            'name' => $name,
+            'slug' => Str::slug($name),
             'description' => fake()->text(200),
             'link' => fake()->url(),
             'image' => fake()->imageUrl(),

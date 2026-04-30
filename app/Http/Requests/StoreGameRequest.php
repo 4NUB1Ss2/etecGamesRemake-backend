@@ -25,9 +25,7 @@ class StoreGameRequest extends FormRequest
             "name" => "required|unique:games,name|max:255",
             "description" => "required|string",
             "link" => "required|url",
-            "image" => "required|image|mimes:jpeg,png,jpg,gif,svg",
-            "user_id" => "required|integer|exists:users,id",
-            "school_id" => "required|exists:schools,id",
+            "image" => "required|image|mimes:jpeg,png,jpg|max:2048",
         ];
     }
 }
