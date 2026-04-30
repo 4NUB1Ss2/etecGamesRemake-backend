@@ -102,4 +102,19 @@ class AuthController extends Controller
         'user'  => $user,
     ]);
 }
+
+private function generateUsername(string $email): string
+{
+    $base = str_replace(['.', '-', '_'], '', explode('@', $email)[0]);
+    $base = preg_replace('/[^a-z0-9]/', '', strtolower($base));
+    $username = $base;
+    $i = 1;
+
+    while (User::where('username', $username)->exists()) {
+        $username = $base . $i;
+        $i++;
+    }
+
+    return $username;
+}
 }
