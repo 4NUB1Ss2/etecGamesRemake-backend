@@ -17,6 +17,7 @@ Route::apiResource('games', GameController::class)->except(['store', 'update', '
 Route::get('games/{slug}', [GameController::class, 'show']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
+Route::post('/auth/google', [AuthController::class, 'googleLogin']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('schools', SchoolController::class)->only(['store', 'update', 'destroy']);
