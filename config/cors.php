@@ -3,7 +3,10 @@
 return [
     'paths' => ['api/*'],
     'allowed_methods' => ['*', '*'],
-    'allowed_origins' => ['http://localhost:5173'],
+    'allowed_origins' => [
+        'https://etecgames.com.br',
+        'https://www.etecgames.com.br',
+    ],
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
     'exposed_headers' => [],
