@@ -13,7 +13,8 @@ class School extends Model
 
     protected $fillable = [
         'name',
-        'address',
+        'city',
+        'state',
     ];
 
     public function user()
