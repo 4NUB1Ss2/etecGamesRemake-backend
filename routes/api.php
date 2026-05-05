@@ -12,20 +12,43 @@ use App\Http\Controllers\SchoolController;
 //})->middleware('auth:sanctum');
 //isso aqui é pra resetar o deploy q ta umamerda, n tem nada a ver com o código em si, só pra forçar o deploy a resetar o cache e pegar as mudanças de CORS e do AuthController
 
-Route::apiResource('schools', SchoolController::class)->except(['store', 'update', 'destroy']);
-Route::apiResource('users', UserController::class)->except(['store', 'update', 'destroy']);
-Route::apiResource('games', GameController::class)->except(['store', 'update', 'destroy', 'show']);
-Route::get('games/{slug}', [GameController::class, 'show']);
-Route::post('login', [AuthController::class, 'login']);
-Route::post('register', [AuthController::class, 'register']);
-Route::post('auth/google', [AuthController::class, 'googleLogin']);
+Route::apiResource("schools", SchoolController::class)->except([
+    "store",
+    "update",
+    "destroy",
+]);
+Route::apiResource("users", UserController::class)->except([
+    "store",
+    "update",
+    "destroy",
+]);
+Route::apiResource("games", GameController::class)->except([
+    "store",
+    "update",
+    "destroy",
+    "show",
+]);
+Route::get("games/{slug}", [GameController::class, "show"]);
+Route::post("login", [AuthController::class, "login"]);
+Route::post("register", [AuthController::class, "register"]);
+Route::post("auth/google", [AuthController::class, "googleLogin"]);
+Route::get("ping", [AuthController::class, "ping"]);
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('schools', SchoolController::class)->only(['store', 'update', 'destroy']);
-    Route::apiResource('users', UserController::class)->only(['store', 'destroy']);
-    Route::put('users', [UserController::class, 'update']);
-    Route::apiResource('games', GameController::class)->only(['store', 'update', 'destroy']);
-    Route::get('me', [AuthController::class, 'me']);
-
+Route::middleware("auth:sanctum")->group(function () {
+    Route::apiResource("schools", SchoolController::class)->only([
+        "store",
+        "update",
+        "destroy",
+    ]);
+    Route::apiResource("users", UserController::class)->only([
+        "store",
+        "destroy",
+    ]);
+    Route::put("users", [UserController::class, "update"]);
+    Route::apiResource("games", GameController::class)->only([
+        "store",
+        "update",
+        "destroy",
+    ]);
+    Route::get("me", [AuthController::class, "me"]);
 });
-
