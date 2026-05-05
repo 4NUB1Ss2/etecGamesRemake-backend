@@ -43,6 +43,12 @@ class AuthController extends Controller
 
     }
 
+    public function ping(Request $request){
+        return response()->json([
+        'message' => 'ok'
+        ], 200);
+    }
+
     public function register(storeUserRequest $request){
         $user = User::create([
            ...$request->validated(),
