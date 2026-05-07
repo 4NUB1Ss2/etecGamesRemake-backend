@@ -58,6 +58,12 @@ class GameController extends Controller
 
     }
 
+    public function increaseClick($slug)
+    {
+        Game::where('slug', $slug)->increment('clicks');
+        return response()->json(null, 204);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -80,7 +86,6 @@ class GameController extends Controller
                 ...$request->validated(),
                 'slug' => Str::slug($request->name),
                 'image' => $imagePath,
-                'clicks' => 10,
                 'user_id' => $user->id,
                 'school_id' => $user->school_id,
             ]);
