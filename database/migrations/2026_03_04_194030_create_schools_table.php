@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('schools', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('address');
+            $table->string('city')->default(null);
+            $table->string('state')->default('SP');
         });
     }
 

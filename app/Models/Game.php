@@ -22,6 +22,7 @@ class Game extends Model
         'image',
         'user_id',
         'school_id',
+        'featured',
     ];
 
     protected $hidden = [

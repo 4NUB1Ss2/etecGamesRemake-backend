@@ -18,7 +18,12 @@ class SchoolFactory extends Factory
     {
         return [
             'name' => 'ETEC ' . fake()->company(),
-            'address' => str_replace("\n", ", ", fake()->address()),
+            'city' => fake()->city(),
+            'state' => fake()->randomElement([
+                'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 
+                'MS', 'MT', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 
+                'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'
+            ]),
         ];
     }
 }

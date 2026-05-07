@@ -15,7 +15,8 @@ class SchoolSeeder extends Seeder
     {
         School::create([
             'name' => 'Sem escola',
-            'address' => 'N/A',
+            'city' => 'N/A',
+            'state' => 'N/A',
         ]);
 
         School::factory(10)->create();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\UserController;
@@ -51,4 +52,19 @@ Route::middleware("auth:sanctum")->group(function () {
         "destroy",
     ]);
     Route::get("me", [AuthController::class, "me"]);
+});
+
+Route::middleware(['auth:sanctum', 'IsAdmin'])->prefix('admin')->group(function () {
+    Route::get('/users', [AdminController::class, 'users']);
+    Route::patch('/users/{username}', [AdminController::class, 'updateUser']);
+
+    Route::get('/games', [AdminController::class, 'games']);
+    Route::patch('/games/{slug}', [AdminController::class, 'updateGame']);
+    Route::delete('/games/{slug}', [AdminController::class, 'deleteGame']);
+
+    Route::get('/schools', [AdminController::class, 'schools']);
+    Route::post('/schools', [AdminController::class, 'createSchool']);
+    Route::patch('/schools/{id}', [AdminController::class, 'updateSchool']);
+    Route::delete('schools/{id}', [AdminController::class, 'deleteSchool']);
+    
 });

@@ -29,11 +29,16 @@ class AuthController extends Controller
             ],401);
         }
 
+        if ($user->banned) {
+            return response()->json(['message' => 'Sua conta foi suspensa'],403);
+        }
+
         $user->tokens()->delete();
         $token = $user->createToken('auth')->plainTextToken;
 
         return response()->json([
             'token' => $token,
+            'user' => $user,
         ],200);
 
 

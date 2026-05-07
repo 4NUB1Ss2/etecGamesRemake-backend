@@ -40,6 +40,8 @@ class GameController extends Controller
                     break;
                 case 'updated':
                     $query->orderBy('games.updated_at', 'desc');
+                case 'featured':
+                    $query->where('featured', true)->orderBy('updated_at','desc');
                 default:
                     $query->orderBy('games.created_at', 'desc');
                     break;

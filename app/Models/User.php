@@ -22,6 +22,7 @@ class User extends Model
         'name',
         'role',
         'school_id',
+        'banned',
     ];
     protected $hidden = [
         'id',

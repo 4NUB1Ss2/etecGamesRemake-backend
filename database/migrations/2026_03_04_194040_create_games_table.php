@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('link');
             $table->string('image');
             $table->integer('clicks')->default(0);
+            $table->boolean('featured')->default(false);
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('school_id')->constrained('schools');
             $table->timestamps();
