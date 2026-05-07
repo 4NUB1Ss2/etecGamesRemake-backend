@@ -40,6 +40,8 @@ class GameController extends Controller
                     break;
                 case 'updated':
                     $query->orderBy('games.updated_at', 'desc');
+                case 'featured':
+                    $query->where('featured', true)->orderBy('updated_at','desc');
                 default:
                     $query->orderBy('games.created_at', 'desc');
                     break;
@@ -54,6 +56,12 @@ class GameController extends Controller
         }
 
 
+    }
+
+    public function increaseClick($slug)
+    {
+        Game::where('slug', $slug)->increment('clicks');
+        return response()->json(null, 204);
     }
 
     /**
@@ -78,7 +86,6 @@ class GameController extends Controller
                 ...$request->validated(),
                 'slug' => Str::slug($request->name),
                 'image' => $imagePath,
-                'clicks' => 10,
                 'user_id' => $user->id,
                 'school_id' => $user->school_id,
             ]);
