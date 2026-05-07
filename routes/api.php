@@ -30,6 +30,7 @@ Route::apiResource("games", GameController::class)->except([
     "show",
 ]);
 Route::get("games/{slug}", [GameController::class, "show"]);
+Route::post('games/{slug}/click', [GameController::class, 'increaseClick']);
 Route::post("login", [AuthController::class, "login"]);
 Route::post("register", [AuthController::class, "register"]);
 Route::post("auth/google", [AuthController::class, "googleLogin"]);
