@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Storage;
+use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
+class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
+    use HasOneTimePasswords;
     use HasApiTokens;
 
     protected $fillable = [
@@ -22,6 +25,8 @@ class User extends Model
         'name',
         'role',
         'school_id',
+        'verified',
+        'aproved',
         'banned',
     ];
     protected $hidden = [

@@ -145,4 +145,9 @@ class AdminController extends Controller
 
         return response()->json(null, 204);
     }
+
+    public function approve(Request $request)
+   {
+       
+   } 
 }

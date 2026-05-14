@@ -11,7 +11,7 @@ use App\Http\Controllers\SchoolController;
 //Route::get('/user', function (Request $request) {
 //    return $request->user();
 //})->middleware('auth:sanctum');
-//isso aqui é pra resetar o deploy q ta umamerda, n tem nada a ver com o código em si, só pra forçar o deploy a resetar o cache e pegar as mudanças de CORS e do AuthController
+
 
 Route::apiResource("schools", SchoolController::class)->except([
     "store",
@@ -33,8 +33,10 @@ Route::get("games/{slug}", [GameController::class, "show"]);
 Route::post('games/{slug}/click', [GameController::class, 'increaseClick']);
 Route::post("login", [AuthController::class, "login"]);
 Route::post("register", [AuthController::class, "register"]);
+Route::post("register-etec", [AuthController::class, "registerEtec"]);
 Route::post("auth/google", [AuthController::class, "googleLogin"]);
 Route::get("ping", [AuthController::class, "ping"]);
+Route::post("emailtest/{username}", [AuthController::class, "emailTest"]);
 
 Route::middleware("auth:sanctum")->group(function () {
     Route::apiResource("schools", SchoolController::class)->only([
@@ -53,7 +55,11 @@ Route::middleware("auth:sanctum")->group(function () {
         "destroy",
     ]);
     Route::get("me", [AuthController::class, "me"]);
+    Route::post("auth/verify-email", [AuthController::class, "verifyEmail"]);
+    Route::post("auth/resend-otp", [AuthController::class, "resendOtp"]);
 });
+
+
 
 Route::middleware(['auth:sanctum', 'IsAdmin'])->prefix('admin')->group(function () {
     Route::get('/users', [AdminController::class, 'users']);
@@ -67,5 +73,7 @@ Route::middleware(['auth:sanctum', 'IsAdmin'])->prefix('admin')->group(function 
     Route::post('/schools', [AdminController::class, 'createSchool']);
     Route::patch('/schools/{id}', [AdminController::class, 'updateSchool']);
     Route::delete('schools/{id}', [AdminController::class, 'deleteSchool']);
+
+    Route::post('/approvals', [AdminController::class, ''])
     
 });

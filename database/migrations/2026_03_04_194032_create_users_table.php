@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('role')->default('user');
             $table->boolean('banned')->default(false);
             $table->foreignId('school_id')->default(1)->constrained('schools');
+            $table->boolean('verified')->nullable()->default(null);
+            $table->boolean('aproved')->nullable()->default(null);
             $table->timestamps();
         });
     }
