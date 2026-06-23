@@ -44,7 +44,7 @@ class AuthController extends Controller
             'user' => $user,
         ],200);
 
-        
+
     }
 
     public function ping(Request $request){
@@ -93,22 +93,22 @@ class AuthController extends Controller
             'user' => $user,
             'token' => $token,
         ],201);
-        
+
     }
 
     public function verifyEmail(Request $request) {
 
-        
+
         if (!$request->otp)
         {
             return response()->json([
                 'message' => 'A request não tem um OTP válido.',
             ],400);
         }
-        
-        
+
+
         $OTP = $request->otp;
-        
+
         $user = $request->user();
         if (!$user)
         {
@@ -147,7 +147,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Não foi possível validar o código OTP. Por favor tente novamente.'
         ],400);
-        
+
     }
 
     public function me(Request $request) {
@@ -169,7 +169,7 @@ class AuthController extends Controller
         ]);
 
         return response()->json(["message" => "Novo código OTP enviado"],200);
-        
+
     }
 
     public function googleLogin(Request $request)
@@ -242,6 +242,6 @@ private function generateUsername(string $email): string
 
     return $username;
 
-    
+
 }
 }

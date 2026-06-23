@@ -59,11 +59,17 @@ Route::middleware("auth:sanctum")->group(function () {
     Route::post("auth/resend-otp", [AuthController::class, "resendOtp"]);
 });
 
+Route::middleware(['auth:sanctum', 'IsProfessor'])->prefix('professor')->group(function () {
+    Route::get('/approvals', [AdminController::class, 'studentApprovals']);
+    Route::patch('/approvals/{usernae}', [AdminController::class, 'approveStudent']);
+
+});
 
 
 Route::middleware(['auth:sanctum', 'IsAdmin'])->prefix('admin')->group(function () {
     Route::get('/users', [AdminController::class, 'users']);
     Route::patch('/users/{username}', [AdminController::class, 'updateUser']);
+    Route::get('/approvals', [AdminController::class, 'approvals']);
 
     Route::get('/games', [AdminController::class, 'games']);
     Route::patch('/games/{slug}', [AdminController::class, 'updateGame']);
@@ -74,6 +80,6 @@ Route::middleware(['auth:sanctum', 'IsAdmin'])->prefix('admin')->group(function 
     Route::patch('/schools/{id}', [AdminController::class, 'updateSchool']);
     Route::delete('schools/{id}', [AdminController::class, 'deleteSchool']);
 
-    Route::post('/approvals', [AdminController::class, ''])
-    
+    //Route::post('/approvals', [AdminController::class, ''])
+
 });

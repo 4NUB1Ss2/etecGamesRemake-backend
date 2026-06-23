@@ -23,7 +23,7 @@ class AdminController extends Controller
             })
             ->when($request->role, fn($q) => $q->where('role', $request->role))
             ->orderBy('created_at', 'desc');
-    
+
         return response()->json($query->paginate($request->per_page ?? 15));
     }
 
@@ -37,13 +37,28 @@ class AdminController extends Controller
 
         $request->validate([
             'role' => 'sometimes|in:user,student,professor,admin',
-            'banned' => 'sometimes|boolean'
+            'banned' => 'sometimes|boolean',
+            'aproved' => 'sometimes|boolean',
         ]);
 
-        $user->update($request->only(['role', 'banned']));
+        $user->update($request->only(['role', 'banned', 'aproved']));
         return response()->json($user->load('school'));
     }
 
+    public function approvals(Request $request)
+    {
+        $query = User::with('school')
+            ->whereIn('role', ['student', 'professor'])
+            ->where('verified', 1)
+            ->where(function($q) {
+                $q->whereNull('aproved');
+            })
+            ->when($request->role, fn($q) => $q->where('role', $request->role))
+            ->orderBy('created_at', 'asc');
+        return response()->json($query->get());
+
+
+    }
     public function games(Request $request)
     {
         $query = Game::with(['user', 'school'])
@@ -146,8 +161,37 @@ class AdminController extends Controller
         return response()->json(null, 204);
     }
 
-    public function approve(Request $request)
+    public function studentApprovals(Request $request)
+    {
+        $professor = $request->user();
+
+        $query = User::with('school')
+            ->where('role', 'student')
+            ->where('school_id', $professor->school_id)
+            ->where('verified', 1)
+            ->whereNull('aproved')
+            ->orderBy('created_at', 'asc');
+
+        return response()->json($query->get());
+    }
+
+    public function approveStudent(Request $request, String $username)
+    {
+        $professor = $request->user();
+        $student = User::where('username', $username)
+            ->where('role', 'student')
+            ->where('school_id', $professor->school_id)
+            ->firstOrFail();
+
+        $request->validate(['aproved' => 'required|boolean']);
+        $student->update(['aproved' => $request->aproved]);
+
+        return response()->json($student, 200);
+    }
+
+    /* public function approve(Request $request)
    {
-       
-   } 
+
+   }
+*/
 }
